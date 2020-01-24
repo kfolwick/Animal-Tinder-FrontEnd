@@ -9,14 +9,26 @@ import {
 
 const Home = () => {
         let formStyle = {
-            'border' : '20px solid black',
+            'border': '50px solid #272B30',
             'background': '#17a2b8',
+            'color': "white"
         };
+        let submitButton = {
+            'background': 'white',
+            'color': 'black',
+        }
+        let formHead = {
+            'text-align': 'center'
+        };
+        let jumbo ={
+            'text-align': 'center'
+        }
+
+
+
         return(
             <div>
-
-
-                <div className="jumbotron">
+                <div className="jumbotron" style={jumbo}>
                   <h1 className="display-3">Adoptable</h1>
                   <p className="lead">Meet your purrfect furry friend!</p>
                   <hr className="my-4"/>
@@ -25,6 +37,8 @@ const Home = () => {
                     <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                   </p>*/}
                 </div>
+
+                <h1 className="display-3" style={formHead}>Sign up here!</h1>
 
                 <form style={formStyle}>
                     <div className="form-group">
@@ -53,6 +67,10 @@ const Home = () => {
                       <label for="exampleInputFile">Profile Picture</label>
                       <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
                     </div>
+
+                    <fieldset>
+                         <button style={submitButton} type="submit" className="btn btn-primary">Submit</button>
+                    </fieldset>
 
                 </form>
             </div>
