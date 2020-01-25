@@ -3,32 +3,44 @@ import React, {Component} from 'react';
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    Redirect
 } from 'react-router-dom';
 
 
-const Home = () => {
-        let formStyle = {
-            'border': '50px solid #272B30',
-            'background': '#17a2b8',
-            'color': "white"
-        };
-        let submitButton = {
-            'background': 'white',
-            'color': 'black',
+class Home extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            success: false,
+            form: {
+                name: '',
+                age: '',
+                size: '',
+                enjoys: ''
+            },
         }
-        let formHead = {
-            'text-align': 'center'
-        };
-        let jumbo ={
-            'text-align': 'center'
-        }
+    }
 
+    handleChange = (e) => {
+        const { form } = this.state
+        form[e.target.name] = e.target.value
+        this.setState({form: form})
+        console.log(this.state.form);
+    }
 
-
+    handleSubmit = () => {
+        console.log("submit",this.state.form);
+        this.props.createDog(this.state.form)
+        .then(()=>{
+            this.setState({success: true})
+        })
+    }
+    render(){
+        let { form } = this.state
         return(
             <div>
-                <div className="jumbotron" style={jumbo}>
+                <div className="jumbotron">
                   <h1 className="display-3">Adoptable</h1>
                   <p className="lead">Meet your purrfect furry friend!</p>
                   <hr className="my-4"/>
@@ -38,45 +50,48 @@ const Home = () => {
                   </p>*/}
                 </div>
 
-                <h1 className="display-3" style={formHead}>Sign up here!</h1>
+                <h1 className="display-3">Sign up here!</h1>
 
-                <form style={formStyle}>
+                <form>
                     <div className="form-group">
-                      <label className="col-form-label col-form-label-lg" for="inputLarge">Name</label>
-                      <input className="form-control form-control-lg" type="text" id="inputLarge" />
+                      <label className="col-form-label col-form-label-lg" for="inputLarge">What's my name?</label>
+                      <input name="name" value={form.name} onChange={this.handleChange} className="form-control form-control-lg" type="text" id="inputLarge" />
                     </div>
 
                     <div className="form-group">
-                      <label className="col-form-label col-form-label-lg" for="inputLarge">Age</label>
-                      <input className="form-control form-control-lg" type="text"  id="inputLarge"/>
+                      <label className="col-form-label col-form-label-lg" for="inputLarge">What's my age?</label>
+                      <input name="age" value={form.age} onChange={this.handleChange} className="form-control form-control-lg" type="text"  id="inputLarge"/>
                     </div>
 
                     <fieldset className="form-group">
-                      <label className="col-form-label col-form-label-lg" for="inputLarge">Size</label>
+                      <label className="col-form-label col-form-label-lg" for="inputLarge">How big am I?</label>
                       <br/>
                       <label for="customRange1">Smol Boi or Chonky Boi</label>
-                      <input type="range" className="custom-range" id="customRange1"/>
+                      <input name="size" value={form.size} onChange={this.handleChange} type="range" className="custom-range" id="customRange1"/>
                     </fieldset>
 
                     <div class="form-group">
-                      <label className="col-form-label col-form-label-lg" for="inputLarge">A lil about me!</label>
-                      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                      <label className="col-form-label col-form-label-lg" for="inputLarge">What do I enjoy?</label>
+                      <textarea onChange={this.handleChange} name="enjoys" value={form.enjoys} class="form-control" id="exampleTextarea" rows="3"></textarea>
                     </div>
 
                     <div class="form-group">
                       <label for="exampleInputFile">Profile Picture</label>
-                      <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                      <input onChange={this.handleChange} type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
                     </div>
 
                     <fieldset>
-                         <button style={submitButton} type="submit" className="btn btn-primary">Submit</button>
+                         <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Submit</button>
                     </fieldset>
 
                 </form>
+                {/*this.state.success &&
+                    <Redirect to ="/dogs" />
+                */}
             </div>
         )
     }
-// }
+}
 
 
 export default Home;
