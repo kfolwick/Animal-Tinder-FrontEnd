@@ -20,9 +20,9 @@ class App extends Component{
         this.getDogs()
     }
 
-    componentWillMount(){
-        this.getDogs();
-    }
+    // componentWillMount(){
+    //     this.getDogs();
+    // }
 
     getDogs = () =>{
         fetch("http://localhost:3000/dogs")
@@ -81,8 +81,11 @@ class App extends Component{
                     </div>
                     <div>
                         <Switch>
-                            <Route path="/home">
-                                <Home />
+                        <Route exact path="/">
+                            <Home createDog={this.createDog}/>
+                        </Route>
+                            <Route exact path="/home">
+                                <Home createDog={this.createDog}/>
                             </Route>
                             <Route exact path="/dogs" render={(props)=> <Dogs dogs={this.state.dogs}/> } />
                             <Route exact path="/newdog" render={(props) => < Home onSubmit={this.createDog} />} />
